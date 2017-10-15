@@ -58,7 +58,7 @@ received_data = received_object.get_data()
 Run the basic encode/decode unit tests using the following command:
 
 ```
-python3 ascii_transport_format_unit_test.py 
+python3 test_ascii_transport_format.py 
 ```
 
 ### Coverage
