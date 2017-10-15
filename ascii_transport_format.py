@@ -59,7 +59,6 @@ class ASCIITransportFormat:
         Parameters:
         Returns: None
         """
-
         if not self.encoded:
             raise ValueError('Cannot decode already decoded data.')
         elif not self.pseudo_encode:
@@ -75,7 +74,6 @@ class ASCIITransportFormat:
             data: String to encode.
         Returns: The encoded string result.
         """
-
         # empty data should return an empty string
         if not data:
             return ''
@@ -116,7 +114,6 @@ class ASCIITransportFormat:
             data: Encoded data to decode.
         Returns: The decoded string result.
         """
-
         # empty data should return an empty string
         if not data:
             return ''
