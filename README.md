@@ -76,6 +76,19 @@ Run-length encoding is a simple, straightforward, and effective algorithm for en
 ### Decode Data
 `decode_data` runs at both O(n) space and time complexity. `decode_data` was also written as a static class function so it could be used elsewhere without creating a class instance, to match `encode_data`. This way, users are provided with a minimal suite to encode, compress, and decode their data while storing the data any way they want to without using my object. Decoding is actually O(1) if the string was pseudo encoded due to size issues. 
 
+### Encoding Format
+If we start with the string:
+```
+' aabbbccccdddddeeeeee'
+```
+
+This will encode into:
+```
+'1  2a 3b 4c 5d 6e'
+```
+
+This can then be decoded back into the original string by utilizing the description of runs that are delimited/separated by spaces.
+
 ### Benchmarks
 Art | Original Size | Encoded Size | Percent Reduction
 ------------ | ------------- | ------------- | -------------
