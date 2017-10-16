@@ -41,7 +41,7 @@ jobs:
         
       # run tests!
       - run:
-          name: run tests
+          name: run lint and tests
           command: |
             . venv/bin/activate
             flake8 --exclude=venv ./
