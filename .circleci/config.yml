@@ -32,7 +32,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip3 install -r requirements.txt
+            pip install -r requirements.txt
 
       - save_cache:
           paths:
@@ -41,10 +41,10 @@ jobs:
         
       # run tests!
       - run:
-          name: run lint and tests
+          name: run tests
           command: |
             . venv/bin/activate
-            flake8 ./
+            flake8 --exclude=venv ./
             python3 test_ascii_transport_format.py 
 
       - store_artifacts:
