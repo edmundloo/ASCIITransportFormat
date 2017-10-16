@@ -100,18 +100,18 @@ class ASCIITransportFormatStringTest(unittest.TestCase):
             test_case,
         )
         self.assertEqual(obj.data, test_case)
-        self.assertEqual(obj.encoded, False)
-        self.assertEqual(obj.pseudo_encode, False)
+        self.assertFalse(obj.encoded)
+        self.assertFalse(obj.pseudo_encode)
 
         obj.encode()
         self.assertEqual(obj.data, test_case)
-        self.assertEqual(obj.encoded, True)
-        self.assertEqual(obj.pseudo_encode, True)
+        self.assertTrue(obj.encoded)
+        self.assertTrue(obj.pseudo_encode)
 
         obj.decode()
         self.assertEqual(obj.data, test_case)
-        self.assertEqual(obj.encoded, False)
-        self.assertEqual(obj.pseudo_encode, False)
+        self.assertFalse(obj.encoded)
+        self.assertFalse(obj.pseudo_encode)
 
     def testEncodeDecodeNonPseudo(self):
         """
@@ -133,18 +133,18 @@ class ASCIITransportFormatStringTest(unittest.TestCase):
                 data,
             )
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode()
             self.assertEqual(obj.data, expected)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertTrue(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.decode()
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
     def testEncodeDecodeWithPseudo(self):
         """
@@ -164,18 +164,18 @@ class ASCIITransportFormatStringTest(unittest.TestCase):
                 data,
             )
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode()
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, True)
+            self.assertTrue(obj.encoded)
+            self.assertTrue(obj.pseudo_encode)
 
             obj.decode()
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
 
 class ASCIITransportFormatJSONTest(unittest.TestCase):
@@ -195,8 +195,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             json_obj,
         )
         self.assertEqual(obj.data, test_case)
-        self.assertEqual(obj.encoded, False)
-        self.assertEqual(obj.pseudo_encode, False)
+        self.assertFalse(obj.encoded)
+        self.assertFalse(obj.pseudo_encode)
 
         json_obj = obj.json()
         obj = ASCIITransportFormat(
@@ -205,8 +205,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
         )
         obj.encode()
         self.assertEqual(obj.data, test_case)
-        self.assertEqual(obj.encoded, True)
-        self.assertEqual(obj.pseudo_encode, True)
+        self.assertTrue(obj.encoded)
+        self.assertTrue(obj.pseudo_encode)
 
         json_obj = obj.json()
         obj = ASCIITransportFormat(
@@ -215,8 +215,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
         )
         obj.decode()
         self.assertEqual(obj.data, test_case)
-        self.assertEqual(obj.encoded, False)
-        self.assertEqual(obj.pseudo_encode, False)
+        self.assertFalse(obj.encoded)
+        self.assertFalse(obj.pseudo_encode)
 
     def testEncodeDecodeNonPseudo(self):
         """
@@ -243,8 +243,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
                 json_obj,
             )
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             json_obj = obj.json()
             obj = ASCIITransportFormat(
@@ -253,8 +253,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             )
             obj.encode()
             self.assertEqual(obj.data, expected)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertTrue(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             json_obj = obj.json()
             obj = ASCIITransportFormat(
@@ -263,8 +263,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             )
             obj.decode()
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
     def testEncodeDecodeWithPseudo(self):
         """
@@ -289,8 +289,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
                 json_obj
             )
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             json_obj = obj.json()
             obj = ASCIITransportFormat(
@@ -299,8 +299,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             )
             obj.encode()
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, True)
+            self.assertTrue(obj.encoded)
+            self.assertTrue(obj.pseudo_encode)
 
             json_obj = obj.json()
             obj = ASCIITransportFormat(
@@ -309,8 +309,8 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             )
             obj.decode()
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
 
 class ASCIITransportFormatFileTest(unittest.TestCase):
@@ -335,18 +335,18 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
                 data,
             )
             self.assertEqual(obj.data, file_data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode()
             self.assertEqual(obj.data, expected)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertTrue(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.decode()
             self.assertEqual(obj.data, file_data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
     def testEncodeDecodeWithPseudo(self):
         """
@@ -365,18 +365,18 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
                 data,
             )
             self.assertEqual(obj.data, file_data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode()
             self.assertEqual(obj.data, file_data)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, True)
+            self.assertTrue(obj.encoded)
+            self.assertTrue(obj.pseudo_encode)
 
             obj.decode()
             self.assertEqual(obj.data, file_data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
     def testEncodeDecodeNonPseudoSampleFiles(self):
         """
@@ -397,17 +397,17 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
                 data,
             )
             self.assertEqual(obj.data, file_data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode()
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertTrue(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.decode()
             self.assertEqual(obj.data, file_data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
 
 class ConstructorExceptionTest(unittest.TestCase):
@@ -452,20 +452,20 @@ class ForceEncodeTest(unittest.TestCase):
                 data,
             )
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode()
             self.assertEqual(obj.data, expected)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertTrue(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             with self.assertRaises(ValueError):
                 obj.encode()
 
             self.assertEqual(obj.data, expected)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertTrue(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
     def testForceEncodeValueError(self):
         """
@@ -487,18 +487,18 @@ class ForceEncodeTest(unittest.TestCase):
                 data,
             )
             self.assertEqual(obj.data, data)
-            self.assertEqual(obj.encoded, False)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertFalse(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode()
             self.assertEqual(obj.data, expected)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, False)
+            self.assertTrue(obj.encoded)
+            self.assertFalse(obj.pseudo_encode)
 
             obj.encode(True)
             self.assertEqual(obj.data, expected)
-            self.assertEqual(obj.encoded, True)
-            self.assertEqual(obj.pseudo_encode, True)
+            self.assertTrue(obj.encoded)
+            self.assertTrue(obj.pseudo_encode)
 
 
 if __name__ == "__main__":
