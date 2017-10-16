@@ -3,11 +3,11 @@ import json
 class ASCIITransportFormat:
     SUPPORTED_TYPES = ['FILE', 'JSON', 'STRING']
 
-    def __init__(self, type=None, data=None, encoded:bool=False) -> None:
+    def __init__(self, data_type=None, data=None, encoded:bool=False) -> None:
         """ASCIITransportFormat constructor.
         Parameters:
-            type: can currently be 'FILE', 'JSON', or 'STRING', type of
-                  constructing data
+            data_type: can currently be 'FILE', 'JSON', or 'STRING', data_type
+                       of constructing data
             data: a filename, JSON string, or ASCII string, used to
                   construct object
             encoded: bool that says whether the input data is encoded
@@ -17,13 +17,14 @@ class ASCIITransportFormat:
         self.encoded = encoded
         self.pseudo_encode = False
 
-        # return and call the correct functions depending on type
-        if type and type.upper() in ASCIITransportFormat.SUPPORTED_TYPES:
+        # return and call the correct functions depending on data_type
+        if (data_type and
+            data_type.upper() in ASCIITransportFormat.SUPPORTED_TYPES):
             {
                 'FILE': self._populate_with_filename,
                 'JSON': self._populate_with_json,
                 'STRING': self._populate_with_string,
-            }.get(type.upper())(data)
+            }.get(data_type.upper())(data)
         else:
             raise ValueError('Constructor used incorrectly.')
 
@@ -148,9 +149,10 @@ class ASCIITransportFormat:
                 # note that we see a space, this is our delimiter
                 if char == ' ':
                     space_seen = True
-
+            
         # add the final count + char pair/element, no trailing space at end
         decoded_string += int(current_element[:-1])*current_element[-1]
+
 
         return decoded_string
 
@@ -201,6 +203,7 @@ class ASCIITransportFormat:
         """
         self.data = data['data']
         self.encoded = data['encoded']
+        self.pseudo_encode = data['pseudo_encode']
 
     def _populate_with_string(self, data:str) -> None:
         """Private function populates object with data from a string.

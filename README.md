@@ -16,7 +16,7 @@ After importing the module:
 from ascii_transport_format import ASCIITransportFormat
 ```
 
-Construct your object using a file or a string:
+Construct your object using a file or a string representing the ASCII art:
 ```
 your_object = ASCIITransportFormat('FILE', your_file_name)
 ```
@@ -36,7 +36,7 @@ your_json = your_object.json()
 # send your JSON somewhere
 ```
 
-Reconstruct your object with the JSON:
+Reconstruct your object with the JSON representing an ASCIITransportFormat object:
 ```
 received_object = ASCIITransportFormat('JSON', received_json)
 ```
