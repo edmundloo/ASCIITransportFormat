@@ -3,6 +3,7 @@ from enum import Enum, auto
 
 
 class ASCIITransportFormat:
+
     class SupportedTypes(Enum):
         FILE = auto()
         JSON = auto()
@@ -12,7 +13,7 @@ class ASCIITransportFormat:
         self,
         data_type: SupportedTypes=None,
         data: str=None,
-        encoded: bool=False
+        encoded: bool=False,
     ) -> None:
         """ASCIITransportFormat constructor.
         Parameters:
@@ -48,7 +49,7 @@ class ASCIITransportFormat:
         """
         if not force and self.encoded:
             raise ValueError(
-                'Cannot encode already encoded data. Trying setting the '
+                'Cannot encode already encoded data. Try setting the '
                 '`force` flag if you believe your usage is correct. '
                 'This may cause unexpected behavior.'
             )
@@ -77,7 +78,7 @@ class ASCIITransportFormat:
         elif not self.pseudo_encode:
             # Only run decode if not pseudo encoded.
             self.data = ASCIITransportFormat.decode_data(self.data)
-        # Reset *encoded flags since this is now decoded.
+        # Reset encode flags since this is now decoded.
         self.encoded = False
         self.pseudo_encode = False
 
@@ -148,14 +149,15 @@ class ASCIITransportFormat:
                 # current_element[:-2] will be the count, '10' and
                 # current_element[-2] will be the 'a' the character
                 # current_element[-1] which is the delimiter which we ignore.
-                decoded_string += int(current_element[:-2])*current_element[-2]
+                decoded_string += (
+                    int(current_element[:-2]) * current_element[-2])
 
                 # Reset space seen and set current_element to the new char.
                 space_seen = False
                 current_element = char
             else:
-                # Append count + char pair to current element
-                # this is used to isolate runs of characters.
+                # Append count + char pair to current element.
+                # This is used to isolate runs of characters.
                 current_element += char
 
                 # Note that we see a space, this is our delimiter.
@@ -163,7 +165,7 @@ class ASCIITransportFormat:
                     space_seen = True
 
         # Add the final count + char pair/element, no trailing space at end.
-        decoded_string += int(current_element[:-1])*current_element[-1]
+        decoded_string += int(current_element[:-1]) * current_element[-1]
 
         return decoded_string
 
