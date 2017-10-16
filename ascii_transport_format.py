@@ -23,11 +23,11 @@ class ASCIITransportFormat:
             encoded: bool that says whether the input data is encoded
         Returns: None
         """
-        # initialize needed object flags
+        # Initialize needed object flags.
         self.encoded = encoded
         self.pseudo_encode = False
 
-        # return and call the correct functions depending on data_type
+        # Return and call the correct functions depending on data_type.
         if (data_type and
             data_type in ASCIITransportFormat.SupportedTypes):
             {
@@ -54,18 +54,18 @@ class ASCIITransportFormat:
                 'This may cause unexpected behavior.'
             )
         else:
-            # encode the actual data and record the result
+            # Encode the actual data and record the result.
             encoded_result = ASCIITransportFormat.encode_data(self.data)
             if len(encoded_result) < len(self.data):
-                # if actually compressed, then use compressed version
-                # which is not pseudo encoded
+                # If actually compressed, then use compressed version
+                # which is not pseudo encoded.
                 self.data = encoded_result
                 self.psuedo_encode = False
             else:
-                # if compression is larger than original, don't use the larger
-                # version and enable pseudo encoding
+                # If compression is larger than original, don't use the larger
+                # version and enable pseudo encoding.
                 self.pseudo_encode = True
-            # set encoded flag if this function was run
+            # Set encoded flag if this function was run.
             self.encoded = True
 
     def decode(self) -> None:
@@ -76,9 +76,9 @@ class ASCIITransportFormat:
         if not self.encoded:
             raise ValueError('Cannot decode already decoded data.')
         elif not self.pseudo_encode:
-            # only run decode if not pseudo encoded
+            # Only run decode if not pseudo encoded.
             self.data = ASCIITransportFormat.decode_data(self.data)
-        # reset *encoded flags since this is now decoded
+        # Reset *encoded flags since this is now decoded.
         self.encoded = False
         self.pseudo_encode = False
 
@@ -88,37 +88,37 @@ class ASCIITransportFormat:
             data: String to encode.
         Returns: The encoded string result.
         """
-        # empty data should return an empty string
+        # Empty data should return an empty string.
         if not data:
             return ''
 
-        # count + char elements held in a list before joining at the end
+        # Count + char elements held in a list before joining at the end.
         encoded_elements = []
 
-        # FSM to implement encoding
+        # FSM to implement encoding.
         current_char, current_count = None, 0
         for char in data:
-            # count repeating characters, increment when repeating characters
-            # are found and store the count + char when char stops repeating
+            # Count repeating characters, increment when repeating characters
+            # are found and store the count + char when char stops repeating.
             if current_char == None:
-                # set the char to the current char if nothing has been set yet
+                # Set the char to the current char if nothing has been set yet.
                 current_char = char
                 current_count += 1
             elif current_char != char:
-                # store pair and reset state if character not repeating
-                # a pair will look like '3a' for a run of 3 repeating 'a' chars
+                # Store pair and reset state if character not repeating a pair
+                # will look like '3a' for a run of 3 repeating 'a' chars.
                 encoded_elements.append(str(current_count)+current_char)
                 current_char = char
                 current_count = 1
             else:
-                # increment for repeats
+                # Increment for repeats.
                 current_count += 1
 
-        # store the very last pair of count + char
+        # Store the very last pair of count + char.
         encoded_elements.append(str(current_count)+current_char)
 
-        # return a string that can be easily stored and transported
-        # a space is used as a delimiter here between count + char pairs
+        # Return a string that can be easily stored and transported
+        # a space is used as a delimiter here between count + char pairs.
         # i.e. '3a 3b 5c 1e'
         return ' '.join(encoded_elements)
     
@@ -128,42 +128,42 @@ class ASCIITransportFormat:
             data: Encoded data to decode.
         Returns: The decoded string result.
         """
-        # empty data should return an empty string
+        # Empty data should return an empty string.
         if not data:
             return ''
        
-        # initialize empty string to build decoded string
+        # Initialize empty string to build decoded string.
         decoded_string = ''
 
-        # FSM to implement decoding
+        # FSM to implement decoding.
         space_seen = False
 
-        # this is the string that tracks our current count + char pair
+        # This is the string that tracks our current count + char pair.
         current_element = ''
         for char in data:
-            # if a space is seen and the current char is a space,
+            # If a space is seen and the current char is a space,
             # then we have double spaces, this means that only the second one
-            # is our delimiter and we want to use the first space as a run
+            # is our delimiter and we want to use the first space as a run.
             if space_seen and char != ' ':
-                # a current element will look like '10a ' where
+                # A current element will look like '10a ' where
                 # current_element[:-2] will be the count, '10' and
                 # current_element[-2] will be the 'a' the character
-                # current_element[-1] which is the delimiter which we ignore
+                # current_element[-1] which is the delimiter which we ignore.
                 decoded_string += int(current_element[:-2])*current_element[-2]
 
-                # reset space seen and set current_element to the new char
+                # Reset space seen and set current_element to the new char.
                 space_seen = False
                 current_element = char
             else:
-                # append count + char pair to current element
-                # this is used to isolate runs of characters
+                # Append count + char pair to current element
+                # this is used to isolate runs of characters.
                 current_element += char
 
-                # note that we see a space, this is our delimiter
+                # Note that we see a space, this is our delimiter.
                 if char == ' ':
                     space_seen = True
             
-        # add the final count + char pair/element, no trailing space at end
+        # Add the final count + char pair/element, no trailing space at end.
         decoded_string += int(current_element[:-1])*current_element[-1]
 
 
