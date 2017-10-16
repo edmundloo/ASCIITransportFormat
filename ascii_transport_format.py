@@ -1,6 +1,6 @@
 import json
-
 from enum import Enum, auto
+
 
 class ASCIITransportFormat:
     class SupportedTypes(Enum):
@@ -10,9 +10,9 @@ class ASCIITransportFormat:
 
     def __init__(
         self,
-        data_type:SupportedTypes=None,
-        data:str=None,
-        encoded:bool=False
+        data_type: SupportedTypes=None,
+        data: str=None,
+        encoded: bool=False
     ) -> None:
         """ASCIITransportFormat constructor.
         Parameters:
@@ -28,8 +28,7 @@ class ASCIITransportFormat:
         self.pseudo_encode = False
 
         # Return and call the correct functions depending on data_type.
-        if (data_type and
-            data_type in ASCIITransportFormat.SupportedTypes):
+        if (data_type and data_type in ASCIITransportFormat.SupportedTypes):
             {
                 ASCIITransportFormat.SupportedTypes.FILE:
                     self._populate_with_filename,
@@ -41,7 +40,7 @@ class ASCIITransportFormat:
         else:
             raise ValueError('Constructor used incorrectly.')
 
-    def encode(self, force:bool=False) -> None:
+    def encode(self, force: bool=False) -> None:
         """Encode the current object's data.
         Parameters:
             force: Flag to prevent accidentally re-encoding, encoded data.
@@ -82,7 +81,7 @@ class ASCIITransportFormat:
         self.encoded = False
         self.pseudo_encode = False
 
-    def encode_data(data:str) -> str:
+    def encode_data(data: str) -> str:
         """Encodes a string and returns the result.
         Parameters:
             data: String to encode.
@@ -100,7 +99,7 @@ class ASCIITransportFormat:
         for char in data:
             # Count repeating characters, increment when repeating characters
             # are found and store the count + char when char stops repeating.
-            if current_char == None:
+            if current_char is None:
                 # Set the char to the current char if nothing has been set yet.
                 current_char = char
                 current_count += 1
@@ -121,8 +120,8 @@ class ASCIITransportFormat:
         # a space is used as a delimiter here between count + char pairs.
         # i.e. '3a 3b 5c 1e'
         return ' '.join(encoded_elements)
-    
-    def decode_data(data:str) -> str:
+
+    def decode_data(data: str) -> str:
         """Decodes an encoded string and returns the result.
         Parameters:
             data: Encoded data to decode.
@@ -131,7 +130,7 @@ class ASCIITransportFormat:
         # Empty data should return an empty string.
         if not data:
             return ''
-       
+
         # Initialize empty string to build decoded string.
         decoded_string = ''
 
@@ -162,7 +161,7 @@ class ASCIITransportFormat:
                 # Note that we see a space, this is our delimiter.
                 if char == ' ':
                     space_seen = True
-            
+
         # Add the final count + char pair/element, no trailing space at end.
         decoded_string += int(current_element[:-1])*current_element[-1]
 
@@ -174,7 +173,7 @@ class ASCIITransportFormat:
         Returns: String representing a JSON on object data.
         """
         return json.dumps(self.__dict__)
-    
+
     def get_data(self) -> str:
         """Object data accessor.
         Parameters:
@@ -185,11 +184,11 @@ class ASCIITransportFormat:
     def is_encoded(self) -> bool:
         """Object encoded flag accessor.
         Parameters:
-        Returns: Whether the current data is encoded or not. 
+        Returns: Whether the current data is encoded or not.
         """
         return self.encoded
 
-    def _populate_with_filename(self, data:str) -> None:
+    def _populate_with_filename(self, data: str) -> None:
         """Private function populates object with data from a file.
         Parameters:
             data: File name.
@@ -198,7 +197,7 @@ class ASCIITransportFormat:
         with open(data) as f:
             self.data = f.read()
 
-    def _populate_with_json(self, data:str) -> None:
+    def _populate_with_json(self, data: str) -> None:
         """Private function populates object with data from a JSON.
         Parameters:
             data: String representing JSON.
@@ -207,7 +206,7 @@ class ASCIITransportFormat:
         new_data = json.loads(data)
         self._populate_with_dict(new_data)
 
-    def _populate_with_dict(self, data:dict) -> None:
+    def _populate_with_dict(self, data: dict) -> None:
         """Private function populates object with data from a dict.
         Parameters:
             data: dict representing an ASCIITransportFormat's __dict__.
@@ -217,7 +216,7 @@ class ASCIITransportFormat:
         self.encoded = data['encoded']
         self.pseudo_encode = data['pseudo_encode']
 
-    def _populate_with_string(self, data:str) -> None:
+    def _populate_with_string(self, data: str) -> None:
         """Private function populates object with data from a string.
         Parameters:
             data: String to directly populate data with.

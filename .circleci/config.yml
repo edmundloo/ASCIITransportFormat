@@ -44,6 +44,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            flake8 ./
             python test_ascii_transport_format.py 
 
       - store_artifacts:

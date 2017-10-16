@@ -1,5 +1,6 @@
-from ascii_transport_format import ASCIITransportFormat
 import unittest
+from ascii_transport_format import ASCIITransportFormat
+
 
 class EncodeTest(unittest.TestCase):
     def testEncodeEmpty(self):
@@ -28,6 +29,7 @@ class EncodeTest(unittest.TestCase):
             encoded_result = ASCIITransportFormat.encode_data(data)
             self.assertEqual(encoded_result, expected)
 
+
 class DecodeTest(unittest.TestCase):
     def testDecodeEmpty(self):
         """Test case for decoding an empty string.
@@ -54,6 +56,7 @@ class DecodeTest(unittest.TestCase):
         for data, expected in test_cases:
             decoded_result = ASCIITransportFormat.decode_data(data)
             self.assertEqual(decoded_result, expected)
+
 
 class EncodeDecodeTest(unittest.TestCase):
     def testEncodeDecodeEmpty(self):
@@ -83,6 +86,7 @@ class EncodeDecodeTest(unittest.TestCase):
             encoded_result = ASCIITransportFormat.encode_data(data)
             decoded_result = ASCIITransportFormat.decode_data(encoded_result)
             self.assertEqual(decoded_result, data)
+
 
 class ASCIITransportFormatStringTest(unittest.TestCase):
     def testEncodeDecodeEmpty(self):
@@ -172,6 +176,7 @@ class ASCIITransportFormatStringTest(unittest.TestCase):
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
+
 
 class ASCIITransportFormatJSONTest(unittest.TestCase):
     def testEncodeDecodeEmpty(self):
@@ -307,6 +312,7 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
 
+
 class ASCIITransportFormatFileTest(unittest.TestCase):
     def testEncodeDecodeNonPseudo(self):
         """
@@ -371,7 +377,7 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
             self.assertEqual(obj.data, file_data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
-    
+
     def testEncodeDecodeNonPseudoSampleFiles(self):
         """
         Test case for encoding a non-pseudo encode result
@@ -403,6 +409,7 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
 
+
 class ConstructorExceptionTest(unittest.TestCase):
     def testConstructorValueError(self):
         """
@@ -421,7 +428,8 @@ class ConstructorExceptionTest(unittest.TestCase):
         ]
         for bad_data_type in test_cases:
             with self.assertRaises(ValueError):
-                obj = ASCIITransportFormat(bad_data_type, '')
+                ASCIITransportFormat(bad_data_type, '')
+
 
 class ForceEncodeTest(unittest.TestCase):
     def testNoForceEncodeValueError(self):
@@ -451,14 +459,14 @@ class ForceEncodeTest(unittest.TestCase):
             self.assertEqual(obj.data, expected)
             self.assertEqual(obj.encoded, True)
             self.assertEqual(obj.pseudo_encode, False)
-            
+
             with self.assertRaises(ValueError):
                 obj.encode()
-   
+
             self.assertEqual(obj.data, expected)
             self.assertEqual(obj.encoded, True)
             self.assertEqual(obj.pseudo_encode, False)
-    
+
     def testForceEncodeValueError(self):
         """
         Test case for attempting to encode an already encoded object with
@@ -486,11 +494,12 @@ class ForceEncodeTest(unittest.TestCase):
             self.assertEqual(obj.data, expected)
             self.assertEqual(obj.encoded, True)
             self.assertEqual(obj.pseudo_encode, False)
-            
+
             obj.encode(True)
             self.assertEqual(obj.data, expected)
             self.assertEqual(obj.encoded, True)
             self.assertEqual(obj.pseudo_encode, True)
+
 
 if __name__ == "__main__":
     unittest.main()
