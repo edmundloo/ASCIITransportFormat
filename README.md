@@ -1,10 +1,17 @@
-# ASCII Transport Format
+# ASCII Transport Format [![CircleCI](https://circleci.com/gh/edmundloo/ASCIITransportFormat.svg?style=svg)](https://circleci.com/gh/edmundloo/ASCIITransportFormat)
 
 A module that allows for encoding, lossless compression, and decoding of ASCII art. The module supports object encoding (which also compresses), object decoding, object to JSON and JSON to object conversion, as well as file (containing ASCII art) to object conversion. 
 
 ## Prerequisites
 
-The project is built in and requires Python 3.
+The project is built in and requires Python 3. The project also uses [flake8](http://flake8.pycqa.org) for linting purposes. To get started with linting you can install the linter using requirements.txt file:
+```
+pip3 install -r requirements.txt
+```
+After you've installed the requirements, run the following command in the root directory:
+```
+flake8
+```
 
 ## Usage
 
