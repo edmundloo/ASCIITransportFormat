@@ -41,10 +41,11 @@ jobs:
         
       # run tests!
       - run:
-          name: run tests
+          name: run lint and tests
           command: |
             . venv/bin/activate
-            python test_ascii_transport_format.py 
+            flake8 --exclude=venv ./
+            python3 test_ascii_transport_format.py 
 
       - store_artifacts:
           path: test-reports
