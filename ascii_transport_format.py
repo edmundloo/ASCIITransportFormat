@@ -1,13 +1,23 @@
 import json
 
-class ASCIITransportFormat:
-    SUPPORTED_TYPES = ['FILE', 'JSON', 'STRING']
+from enum import Enum, auto
 
-    def __init__(self, data_type=None, data=None, encoded:bool=False) -> None:
+class ASCIITransportFormat:
+    class SupportedTypes(Enum):
+        FILE = auto()
+        JSON = auto()
+        STRING = auto()
+
+    def __init__(
+        self,
+        data_type:SupportedTypes=None,
+        data:str=None,
+        encoded:bool=False
+    ) -> None:
         """ASCIITransportFormat constructor.
         Parameters:
-            data_type: can currently be 'FILE', 'JSON', or 'STRING', data_type
-                       of constructing data
+            data_type: can currently be FILE, JSON, or STRING enums, data_type
+                       of constructing data, refer to SupportedTypes enum
             data: a filename, JSON string, or ASCII string, used to
                   construct object
             encoded: bool that says whether the input data is encoded
@@ -19,12 +29,15 @@ class ASCIITransportFormat:
 
         # return and call the correct functions depending on data_type
         if (data_type and
-            data_type.upper() in ASCIITransportFormat.SUPPORTED_TYPES):
+            data_type in ASCIITransportFormat.SupportedTypes):
             {
-                'FILE': self._populate_with_filename,
-                'JSON': self._populate_with_json,
-                'STRING': self._populate_with_string,
-            }.get(data_type.upper())(data)
+                ASCIITransportFormat.SupportedTypes.FILE:
+                    self._populate_with_filename,
+                ASCIITransportFormat.SupportedTypes.JSON:
+                    self._populate_with_json,
+                ASCIITransportFormat.SupportedTypes.STRING:
+                    self._populate_with_string,
+            }.get(data_type)(data)
         else:
             raise ValueError('Constructor used incorrectly.')
 

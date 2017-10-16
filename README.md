@@ -18,11 +18,11 @@ from ascii_transport_format import ASCIITransportFormat
 
 Construct your object using a file or a string representing the ASCII art:
 ```
-your_object = ASCIITransportFormat('FILE', your_file_name)
+your_object = ASCIITransportFormat(ASCIITransportFormat.SupportedTypes.FILE, your_file_name)
 ```
 or
 ```
-your_object = ASCIITransportFormat('STRING', your_ascii_string)
+your_object = ASCIITransportFormat(ASCIITransportFormat.SupportedTypes.STRING, your_ascii_string)
 ```
 
 Encode your object:
@@ -38,7 +38,7 @@ your_json = your_object.json()
 
 Reconstruct your object with the JSON representing an ASCIITransportFormat object:
 ```
-received_object = ASCIITransportFormat('JSON', received_json)
+received_object = ASCIITransportFormat(ASCIITransportFormat.SupportedTypes.JSON, received_json)
 ```
 
 Decode your object:

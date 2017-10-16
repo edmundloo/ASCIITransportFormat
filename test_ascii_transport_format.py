@@ -91,7 +91,10 @@ class ASCIITransportFormatStringTest(unittest.TestCase):
         using ASCIITransportFormat STRING object.
         """
         test_case = ''
-        obj = ASCIITransportFormat('STRING', test_case)
+        obj = ASCIITransportFormat(
+            ASCIITransportFormat.SupportedTypes.STRING,
+            test_case,
+        )
         self.assertEqual(obj.data, test_case)
         self.assertEqual(obj.encoded, False)
         self.assertEqual(obj.pseudo_encode, False)
@@ -121,7 +124,10 @@ class ASCIITransportFormatStringTest(unittest.TestCase):
             ('aaaa1111\nbbbb2222', '4a 41 1\n 4b 42'),
         ]
         for data, expected in test_cases:
-            obj = ASCIITransportFormat('STRING', data)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.STRING,
+                data,
+            )
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
@@ -149,7 +155,10 @@ class ASCIITransportFormatStringTest(unittest.TestCase):
             'a1b2\nc3d4e5',
         ]
         for data in test_cases:
-            obj = ASCIITransportFormat('STRING', data)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.STRING,
+                data,
+            )
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
@@ -171,22 +180,34 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
         using ASCIITransportFormat JSON object.
         """
         test_case = ''
-        string_obj = ASCIITransportFormat('STRING', test_case)
+        string_obj = ASCIITransportFormat(
+            ASCIITransportFormat.SupportedTypes.STRING,
+            test_case,
+        )
         json_obj = string_obj.json()
-        obj = ASCIITransportFormat('JSON', json_obj)
+        obj = ASCIITransportFormat(
+            ASCIITransportFormat.SupportedTypes.JSON,
+            json_obj,
+        )
         self.assertEqual(obj.data, test_case)
         self.assertEqual(obj.encoded, False)
         self.assertEqual(obj.pseudo_encode, False)
 
         json_obj = obj.json()
-        obj = ASCIITransportFormat('JSON', json_obj)
+        obj = ASCIITransportFormat(
+            ASCIITransportFormat.SupportedTypes.JSON,
+            json_obj,
+        )
         obj.encode()
         self.assertEqual(obj.data, test_case)
         self.assertEqual(obj.encoded, True)
         self.assertEqual(obj.pseudo_encode, True)
 
         json_obj = obj.json()
-        obj = ASCIITransportFormat('JSON', json_obj)
+        obj = ASCIITransportFormat(
+            ASCIITransportFormat.SupportedTypes.JSON,
+            json_obj,
+        )
         obj.decode()
         self.assertEqual(obj.data, test_case)
         self.assertEqual(obj.encoded, False)
@@ -207,22 +228,34 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             ('aaaa1111\nbbbb2222', '4a 41 1\n 4b 42'),
         ]
         for data, expected in test_cases:
-            string_obj = ASCIITransportFormat('STRING', data)
+            string_obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.STRING,
+                data
+            )
             json_obj = string_obj.json()
-            obj = ASCIITransportFormat('JSON', json_obj)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.JSON,
+                json_obj,
+            )
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
 
             json_obj = obj.json()
-            obj = ASCIITransportFormat('JSON', json_obj)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.JSON,
+                json_obj,
+            )
             obj.encode()
             self.assertEqual(obj.data, expected)
             self.assertEqual(obj.encoded, True)
             self.assertEqual(obj.pseudo_encode, False)
 
             json_obj = obj.json()
-            obj = ASCIITransportFormat('JSON', json_obj)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.JSON,
+                json_obj,
+            )
             obj.decode()
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, False)
@@ -241,22 +274,34 @@ class ASCIITransportFormatJSONTest(unittest.TestCase):
             'a1b2\nc3d4e5',
         ]
         for data in test_cases:
-            string_obj = ASCIITransportFormat('STRING', data)
+            string_obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.STRING,
+                data,
+            )
             json_obj = string_obj.json()
-            obj = ASCIITransportFormat('JSON', json_obj)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.JSON,
+                json_obj
+            )
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
 
             json_obj = obj.json()
-            obj = ASCIITransportFormat('JSON', json_obj)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.JSON,
+                json_obj,
+            )
             obj.encode()
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, True)
             self.assertEqual(obj.pseudo_encode, True)
 
             json_obj = obj.json()
-            obj = ASCIITransportFormat('JSON', json_obj)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.JSON,
+                json_obj,
+            )
             obj.decode()
             self.assertEqual(obj.data, data)
             self.assertEqual(obj.encoded, False)
@@ -279,7 +324,10 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
             ),
         ]
         for data, file_data, expected in test_cases:
-            obj = ASCIITransportFormat('FILE', data)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.FILE,
+                data,
+            )
             self.assertEqual(obj.data, file_data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
@@ -306,7 +354,10 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
             ('test_files/1_22_333_file.txt', '122333'),
         ]
         for data, file_data in test_cases:
-            obj = ASCIITransportFormat('FILE', data)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.FILE,
+                data,
+            )
             self.assertEqual(obj.data, file_data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
@@ -335,7 +386,10 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
             file_data = None
             with open(data) as f:
                 file_data = f.read()
-            obj = ASCIITransportFormat('FILE', data)
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.FILE,
+                data,
+            )
             self.assertEqual(obj.data, file_data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
