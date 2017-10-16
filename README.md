@@ -82,12 +82,17 @@ If we start with the string:
 ' aabbbccccdddddeeeeee'
 ```
 
-This will encode into:
+This will encode into with a ' ' as a delimiter between multiple runs:
 ```
 '1  2a 3b 4c 5d 6e'
 ```
 
 This can then be decoded back into the original string by utilizing the description of runs that are delimited/separated by spaces.
+
+### Tradeoffs and Improvements
+- We can use a different encoding to store our numbers to reduce the amount of space large numbers take up.
+- If we limit our problem size to under a certain number (i.e 100 runs max), the count in runs can be represented by a single character, with 100 runs, we can just use `chr(count)` to represent our 3 character count `100` as the single character `d`. This also enables us to more closely pack the characters since we would no longer need a delimiter (each count + char pair can be represented with two characters). I chose not to do this to make the code work for as much art as possible.
+- Since ASCII art usually has many repeating characters and uses a small subset of characters, we can map each character to a value that takes up less space in memory and store these smaller values on our runs. For example, if we only use the characters `['a', 'b', 'c']`, we can map `a -> 01`, `b -> 10`, and `c -> 11`, greatly reducing the amount of stored bits.
 
 ### Benchmarks
 Art | Original Size | Encoded Size | Percent Reduction
