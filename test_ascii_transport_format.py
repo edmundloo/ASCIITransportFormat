@@ -500,5 +500,6 @@ class ForceEncodeTest(unittest.TestCase):
             self.assertEqual(obj.encoded, True)
             self.assertEqual(obj.pseudo_encode, True)
 
+
 if __name__ == "__main__":
     unittest.main()
