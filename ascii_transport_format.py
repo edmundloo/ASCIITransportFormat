@@ -166,7 +166,6 @@ class ASCIITransportFormat:
         # Add the final count + char pair/element, no trailing space at end.
         decoded_string += int(current_element[:-1])*current_element[-1]
 
-
         return decoded_string
 
     def json(self) -> str:

@@ -314,11 +314,11 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
         string using ASCIITransportFormat FILE object.
         """
         test_cases = [
-            ('test_files/aaabbb_file.txt', 'aaabbb', '3a 3b'),
-            ('test_files/three_newline_file.txt', '\n\n\n', '3\n'),
-            ('test_files/ten_a_file.txt', 'aaaaaaaaaa', '10a'),
+            ('test_files/non_pseudo_1.txt', 'aaabbb', '3a 3b'),
+            ('test_files/non_pseudo_2.txt', '\n\n\n', '3\n'),
+            ('test_files/non_pseudo_3.txt', 'aaaaaaaaaa', '10a'),
             (
-                'test_files/ten_a_eleven_b_file.txt',
+                'test_files/non_pseudo_4.txt',
                 'aaaaaaaaaabbbbbbbbbbb',
                 '10a 11b'
             ),
@@ -348,10 +348,10 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
         string using ASCIITransportFormat JSON object.
         """
         test_cases = [
-            ('test_files/single_newline_file.txt', '\n'),
-            ('test_files/single_space_file.txt', ' '),
-            ('test_files/a_b_file.txt', 'a b'),
-            ('test_files/1_22_333_file.txt', '122333'),
+            ('test_files/pseudo_1.txt', '\n'),
+            ('test_files/pseudo_2.txt', ' '),
+            ('test_files/pseudo_3.txt', 'a b'),
+            ('test_files/pseudo_4.txt', '122333'),
         ]
         for data, file_data in test_cases:
             obj = ASCIITransportFormat(
@@ -402,6 +402,95 @@ class ASCIITransportFormatFileTest(unittest.TestCase):
             self.assertEqual(obj.data, file_data)
             self.assertEqual(obj.encoded, False)
             self.assertEqual(obj.pseudo_encode, False)
+
+class ConstructorExceptionTest(unittest.TestCase):
+    def testConstructorValueError(self):
+        """
+        Test case for attempting to construct an object with a bad
+        data_type.
+        """
+        test_cases = [
+            'these',
+            'are',
+            'bad',
+            'data',
+            'types',
+            'FILE',
+            'STRING',
+            'JSON',
+        ]
+        for bad_data_type in test_cases:
+            with self.assertRaises(ValueError):
+                obj = ASCIITransportFormat(bad_data_type, '')
+
+class ForceEncodeTest(unittest.TestCase):
+    def testNoForceEncodeValueError(self):
+        """
+        Test case for attempting to encode an already encoded object without
+        the force flag.
+        """
+        test_cases = [
+            ('aaabbb', '3a 3b'),
+            ('\n\n\n', '3\n'),
+            ('aaaaaaaaaa', '10a'),
+            ('aaaaaaaaaabbbbbbbbbbb', '10a 11b'),
+            ('a'*1001, '1001a'),
+            (''.join(['a'*1001, 'b'*909, 'c'*65, 'd'*2]), '1001a 909b 65c 2d'),
+            ('aaaa1111\nbbbb2222', '4a 41 1\n 4b 42'),
+        ]
+        for data, expected in test_cases:
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.STRING,
+                data,
+            )
+            self.assertEqual(obj.data, data)
+            self.assertEqual(obj.encoded, False)
+            self.assertEqual(obj.pseudo_encode, False)
+
+            obj.encode()
+            self.assertEqual(obj.data, expected)
+            self.assertEqual(obj.encoded, True)
+            self.assertEqual(obj.pseudo_encode, False)
+            
+            with self.assertRaises(ValueError):
+                obj.encode()
+   
+            self.assertEqual(obj.data, expected)
+            self.assertEqual(obj.encoded, True)
+            self.assertEqual(obj.pseudo_encode, False)
+    
+    def testForceEncodeValueError(self):
+        """
+        Test case for attempting to encode an already encoded object with
+        the force flag.
+        """
+        test_cases = [
+            ('aaabbb', '3a 3b'),
+            ('\n\n\n', '3\n'),
+            ('aaaaaaaaaa', '10a'),
+            ('aaaaaaaaaabbbbbbbbbbb', '10a 11b'),
+            ('a'*1001, '1001a'),
+            (''.join(['a'*1001, 'b'*909, 'c'*65, 'd'*2]), '1001a 909b 65c 2d'),
+            ('aaaa1111\nbbbb2222', '4a 41 1\n 4b 42'),
+        ]
+        for data, expected in test_cases:
+            obj = ASCIITransportFormat(
+                ASCIITransportFormat.SupportedTypes.STRING,
+                data,
+            )
+            self.assertEqual(obj.data, data)
+            self.assertEqual(obj.encoded, False)
+            self.assertEqual(obj.pseudo_encode, False)
+
+            obj.encode()
+            self.assertEqual(obj.data, expected)
+            self.assertEqual(obj.encoded, True)
+            self.assertEqual(obj.pseudo_encode, False)
+            
+            obj.encode(True)
+            self.assertEqual(obj.data, expected)
+            self.assertEqual(obj.encoded, True)
+            self.assertEqual(obj.pseudo_encode, True)
 
 if __name__ == "__main__":
     unittest.main()
